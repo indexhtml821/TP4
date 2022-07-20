@@ -7,12 +7,14 @@
 #include <fstream>
 #include <sstream>
 #include <QMessageBox>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lineEditStoreName->setMaxLength(15);
 }
 
 MainWindow::~MainWindow()
@@ -49,21 +51,73 @@ bool MainWindow::check_File(ifstream * stream){
 
 void MainWindow::on_loadStoreb_clicked()
 {
-    ifstream fileLoad;
-    if(check_File(&fileLoad)){
+    QString fileName = QFileDialog::getSaveFileName(this,
+              "Load data file", "",
+              tr("data file (*.dat);;All Files (*)"));
 
-    }else{
-    fileLoad.open("test_file.dat", ios::in | ios::binary);
-    this->store.loadFromBinaryFile(&fileLoad);
-  }
+
+   if(fileName != ""){
+     string name = fileName.toStdString();
+
+    ifstream fileLoad;
+    fileLoad.open(name, ios::in | ios::binary);
+    if (!fileLoad.is_open())
+       {
+
+        QMessageBox *msgbox = new QMessageBox(this);
+              msgbox->setWindowTitle("Warning message");
+              msgbox->setText("file couldnt be opened");
+              msgbox->open();
+
+       }else{
+
+     this->store.loadFromBinaryFile(&fileLoad);
+     fileLoad.close();
+
+
+     this->ui->lineEditStoreName->setText(this->store.storeName);
+    }
+
+   }
 }
 
+void MainWindow::on_saveStoreB_clicked()
+{
+
+    QString fileName = QFileDialog::getSaveFileName(this,
+               "Guardar archivo de datos", "",
+               tr("data file (*.dat);;All Files (*)"));
+    string name = fileName.toStdString();
+
+    if (fileName != "")
+       {
+        ofstream storageFile;
+        storageFile.open(name, ios::in | ios::binary);
+        if (!storageFile.is_open())
+           {
+
+            QMessageBox *msgbox = new QMessageBox(this);
+                  msgbox->setWindowTitle("Warning message");
+                  msgbox->setText("file couldnt be opened");
+                  msgbox->open();
+
+           }else{
+
+
+
+            this->store.storetoBinaryFile(&storageFile);
+            storageFile.close();
+
+        }
+
+
+    }
+
+}
 
 void MainWindow::on_addProductB_clicked()
 {
     DialogformAddProduct formAddProduct;
-
-
     int result = formAddProduct.exec();
 
     int prodId =formAddProduct.getId();
@@ -112,6 +166,8 @@ void MainWindow::on_addProductB_clicked()
 void MainWindow::on_deleteProductB_clicked()
 {
 
+
+
     QListWidgetItem *selectedItem= this->ui->showProducts->currentItem();
 
        if (selectedItem == nullptr)
@@ -132,4 +188,52 @@ void MainWindow::on_deleteProductB_clicked()
        }
 
 }
+
+
+void MainWindow::on_modifyProductB_clicked()
+{
+    QListWidgetItem *selectedItem= this->ui->showProducts->currentItem();
+
+    DialogformAddProduct formAddProduct;
+
+
+       if (selectedItem == nullptr)
+       {
+           // no item has been selected
+           QMessageBox *msgbox = new QMessageBox(this);
+           msgbox->setWindowTitle("Warning message");
+           msgbox->setText("No item has been selected from the products panel");
+           msgbox->open();
+       }else {
+
+           QString productSelected = selectedItem->data(1).toString();
+           int id = productSelected.toInt();
+           string name = this->store.getProductName(id);
+           int amount = this->store.getProductAmount(id);
+
+
+           formAddProduct.loadInformation(id,name,amount);
+
+           int result =formAddProduct.exec();
+
+           string prodName =formAddProduct.getName();
+           int prodAmount =formAddProduct.getAmount();
+
+           if(result == QDialog::Accepted){
+
+               this->store.modifyProductName(id,prodName);
+               this->store.modifyProductAmount(id,prodAmount);
+               QString modifiedInfo = QString::fromStdString(this->store.getProductInfo(id));
+
+               selectedItem->setText(modifiedInfo);
+
+           }
+
+
+
+
+       }
+}
+
+
 
