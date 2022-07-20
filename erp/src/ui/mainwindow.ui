@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1063</width>
-    <height>626</height>
+    <width>897</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>100</y>
+      <y>120</y>
       <width>521</width>
       <height>291</height>
      </rect>
@@ -28,7 +28,7 @@
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>110</y>
+      <y>150</y>
       <width>171</width>
       <height>61</height>
      </rect>
@@ -41,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>210</y>
+      <y>240</y>
       <width>171</width>
       <height>61</height>
      </rect>
@@ -50,24 +50,11 @@
      <string>Delete Product</string>
     </property>
    </widget>
-   <widget class="QLabel" name="storeNameL">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="loadStoreb">
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>410</y>
+      <y>430</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -79,8 +66,8 @@
    <widget class="QPushButton" name="saveStoreB">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>410</y>
+      <x>350</x>
+      <y>430</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -93,7 +80,7 @@
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>310</y>
+      <y>330</y>
       <width>171</width>
       <height>61</height>
      </rect>
@@ -102,6 +89,70 @@
      <string>Modify Product</string>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>521</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="storeNameL">
+       <property name="text">
+        <string>Store Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="storeLocationL">
+       <property name="text">
+        <string>Location</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="storeInternetAddressL">
+       <property name="text">
+        <string>Internet Adress</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="storePhoneNumberL">
+       <property name="text">
+        <string>Phone Number</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>521</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="lineEdit"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_2"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_3"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_4"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -109,8 +160,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1063</width>
-     <height>21</height>
+     <width>897</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>
