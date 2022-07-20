@@ -22,6 +22,17 @@ DialogformAddProduct::~DialogformAddProduct()
 
 void DialogformAddProduct::loadInformation(int id, string name, int amount){
 
+    QString stringId = QString::number(id);
+    this->ui->lineEditID->setReadOnly(true);
+    this->ui->lineEditID->setText(stringId);
+
+    QString stringName = QString::fromStdString(name);
+    this->ui->lineEditName->setText(stringName);
+
+    QString stringAmount = QString::number(amount);
+    this->ui->lineEditAmount->setText(stringAmount);
+
+
 
 }
 int DialogformAddProduct::getId(){
