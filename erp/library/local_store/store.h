@@ -34,10 +34,17 @@ public:
   bool idIstaken(int id);
   void modifyProductAmount(int id, int amount);
   void modifyProductName(int id, string name);
+  void modifyStoreInfo(string name,
+                       string ip,
+                       string location,
+                       string phoneNumber);
   vector<Product *> listProducts();
   void deleteProduct(int id);
   void storetoBinaryFile(ostream *storestream);
   void loadFromBinaryFile(istream *streamEntrada);
+  int getProductAmount(int id);
+  string getProductName(int id);
+  string getProductInfo(int id);
   friend ostream &operator<<(ostream &o, const Store *store);
 };
 

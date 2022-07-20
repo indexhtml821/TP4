@@ -193,6 +193,25 @@ void Store::loadFromBinaryFile(istream *loadStream)
   }
 }
 
+
+int Store:: getProductAmount(int id){
+
+    return this->stockProducts.at(id)->getAmount();
+}
+
+string Store:: getProductName(int id){
+
+     return this->stockProducts.at(id)->getName();
+}
+string Store:: getProductInfo(int id){
+
+   ostringstream productInfoStream;
+
+   productInfoStream << this->stockProducts.at(id);
+
+   return productInfoStream.str();
+
+}
 ostream &operator<<(ostream &o, const Store *store)
 {
 
