@@ -24,6 +24,7 @@ public:
     void setName(string name);
     string getName();
     void setAmount(int amount);
+    int getAmount();
 
     friend ostream &operator<<(ostream &o, const Product *product);
 };

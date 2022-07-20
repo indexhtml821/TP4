@@ -54,6 +54,11 @@ void Product::setAmount(int amount)
     this->amount = amount;
 }
 
+int Product:: getAmount(){
+
+    return this->amount;
+}
+
 ostream &operator<<(ostream &o, const Product *product)
 {
     o  << product->productId << " -  " << product->prodName << " - " << product->amount;
