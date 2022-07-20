@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    string binaryFile = "store_file.dat";
+
 
 private slots:
 
@@ -27,6 +27,10 @@ private slots:
     void on_addProductB_clicked();
 
     void on_deleteProductB_clicked();
+
+    void on_modifyProductB_clicked();
+
+    void on_saveStoreB_clicked();
 
 private:
     Ui::MainWindow *ui;
