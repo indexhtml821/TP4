@@ -35,11 +35,12 @@ public:
   void modifyProductAmount(int id, int amount);
   void modifyProductName(int id, string name);
   void modifyStoreInfo(string name,
-                       string ip,
+                       string internetAddress,
                        string location,
                        string phoneNumber);
   vector<Product *> listProducts();
   void deleteProduct(int id);
+  void cleanStoreStock();
   void storetoBinaryFile(ostream *storestream);
   void loadFromBinaryFile(istream *streamEntrada);
   int getProductAmount(int id);
