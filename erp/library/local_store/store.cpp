@@ -109,14 +109,32 @@ void Store::modifyProductName(int id, string name)
 
   if (stockProducts.count(id))
   {
+      if(productAlreadyExists(name)){
+          throw ExceptionProductNameIsTaken();
+          return;
+      }else{
     stockProducts.at(id)->setName(name);
     return;
+      }
   }
   else
   {
     throw ExceptionIdNotAllowed();
     return;
   }
+}
+
+void Store::modifyStoreInfo(string name,
+                            string internetAddress,
+                            string location,
+                            string phoneNumber){
+
+    strcpy(this->storeName, name.c_str());
+    strcpy(this->internetAddress, internetAddress.c_str());
+    strcpy(this->location, location.c_str());
+    strcpy(this->phoneNumber, phoneNumber.c_str());
+
+
 }
 
 vector<Product *> Store::listProducts()
@@ -152,6 +170,11 @@ void Store::deleteProduct(int id)
     throw ExceptionIdNotAllowed();
     return;
   }
+}
+
+void Store::cleanStoreStock(){
+
+   this->stockProducts.erase(stockProducts.begin(), this->stockProducts.end());
 }
 
 void Store::storetoBinaryFile(ostream *storestream)
