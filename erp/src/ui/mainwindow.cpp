@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../.././library/local_store/store.h"
+#include "../.././library/local_store/exceptionIdNotAllowed.h""
+#include "../.././library/local_store/exceptionProductNameIsTaken.h".h""
 #include "dialogformaddproduct.h"
 
 #include <string>
@@ -8,6 +10,7 @@
 #include <sstream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,10 +54,11 @@ bool MainWindow::check_File(ifstream * stream){
 
 void MainWindow::on_loadStoreb_clicked()
 {
+
     QString fileName = QFileDialog::getSaveFileName(this,
               "Load data file", "",
               tr("data file (*.dat);;All Files (*)"));
-
+    vector<Product*> listOfProducts;
 
    if(fileName != ""){
      string name = fileName.toStdString();
@@ -71,11 +75,33 @@ void MainWindow::on_loadStoreb_clicked()
 
        }else{
 
+     ui->showProducts->clear();
+     this->store.cleanStoreStock();
      this->store.loadFromBinaryFile(&fileLoad);
      fileLoad.close();
 
 
      this->ui->lineEditStoreName->setText(this->store.storeName);
+     this->ui->lineEditInternetAdress->setText(this->store.internetAddress);
+     this->ui->lineEditLocation->setText(this->store.location);
+     this->ui->lineEditPhoneNumber->setText(this->store.phoneNumber);
+
+     listOfProducts = this->store.listProducts();
+
+     for (Product *productRead : listOfProducts)
+       {
+
+         ostringstream productInfo;
+         productInfo <<productRead;
+         string stringProductInfo = productInfo.str();
+         QString qstringProductInfo = QString::fromStdString(stringProductInfo);
+
+         QListWidgetItem *newItem = new QListWidgetItem(qstringProductInfo);
+         newItem->setData(1, productRead->getId());
+         this->ui->showProducts->addItem(newItem);
+       }
+
+
     }
 
    }
@@ -102,8 +128,16 @@ void MainWindow::on_saveStoreB_clicked()
                   msgbox->open();
 
            }else{
+            /*
+            string ip,
+            string location,
+            string phoneNumber*/
+            string storeName = this->ui->lineEditStoreName->text().toStdString();
+            string storeInternetAddress = this->ui->lineEditInternetAdress->text().toStdString();
+            string storeLocation = this->ui->lineEditLocation->text().toStdString();
+            string storePhoneNumber = this->ui->lineEditPhoneNumber->text().toStdString();
 
-
+            this->store.modifyStoreInfo(storeName,storeInternetAddress,storeLocation,storePhoneNumber);
 
             this->store.storetoBinaryFile(&storageFile);
             storageFile.close();
@@ -123,28 +157,34 @@ void MainWindow::on_addProductB_clicked()
     int prodId =formAddProduct.getId();
     int prodAmount =formAddProduct.getAmount();
     string prodName =formAddProduct.getName();
+    int validate =0;
 
 
-     if(store.idIstaken(prodId)){
-
-         QMessageBox *msgbox = new QMessageBox(this);
-               msgbox->setWindowTitle("Warning message");
-               msgbox->setText("Id key is already under use");
-               msgbox->open();
-
-  } else if(store.productAlreadyExists(prodName)){
-
-         QMessageBox *msgbox = new QMessageBox(this);
-               msgbox->setWindowTitle("Warning Message");
-               msgbox->setText("Product already exists");
-               msgbox->open();
-
-  }    else if (result == QDialog::Accepted){
+  if (result == QDialog::Accepted){
 
       Product *product = new Product(prodId, prodAmount ,
                                         prodName);
+      try{
       this->store.addProduct(product);
-     // int listCount = this->ui->showProducts->count();
+      }catch (ExceptionIdNotAllowed &e){
+
+                validate = 1;
+          QMessageBox *msgbox = new QMessageBox(this);
+                msgbox->setWindowTitle("Warning message");
+                msgbox->setText("Id key is already under use or is negative id");
+                msgbox->open();
+
+
+      }catch(ExceptionProductNameIsTaken &e){
+
+                validate = 1;
+          QMessageBox *msgbox = new QMessageBox(this);
+                msgbox->setWindowTitle("Warning Message");
+                msgbox->setText("Product already exists");
+                msgbox->open();
+      }
+
+      if(validate ==0){
       ostringstream productInfo;
       productInfo <<product;
       string stringProductInfo = productInfo.str();
@@ -153,6 +193,7 @@ void MainWindow::on_addProductB_clicked()
       QListWidgetItem *newItem = new QListWidgetItem(qstringProductInfo);
       newItem->setData(1, prodId);
       this->ui->showProducts->addItem(newItem);
+      }
 
 
       }
@@ -221,7 +262,16 @@ void MainWindow::on_modifyProductB_clicked()
 
            if(result == QDialog::Accepted){
 
+             try{
                this->store.modifyProductName(id,prodName);
+               }catch(ExceptionProductNameIsTaken &e){
+
+                   QMessageBox *msgbox = new QMessageBox(this);
+                   msgbox->setWindowTitle("Warning message");
+                   msgbox->setText("Product already exists");
+                   msgbox->open();
+
+               }
                this->store.modifyProductAmount(id,prodAmount);
                QString modifiedInfo = QString::fromStdString(this->store.getProductInfo(id));
 
