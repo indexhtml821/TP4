@@ -56,42 +56,54 @@ int DialogformAddProduct::getAmount(){
 
 void DialogformAddProduct::on_lineEditID_editingFinished()
 {
-    QString stringCheck = this->ui->lineEditID->text();
+    QString stringCheckId = this->ui->lineEditID->text();
+    QString stringCheckAmount = this->ui->lineEditAmount->text();
+    QString stringCheckName = this->ui->lineEditName->text();
     bool ok = false;
-    stringCheck.toInt(&ok);
+    bool ok1 = false;
+    stringCheckId.toInt(&ok);
+    stringCheckAmount.toInt(&ok1);
 
-    if(!ok){
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-    }else{
-         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-    }
+    checkLines( ok, ok1 , stringCheckName.trimmed().isEmpty());
 }
 
 
 void DialogformAddProduct::on_lineEditAmount_editingFinished()
 {
-    QString stringCheck = this->ui->lineEditAmount->text();
+    QString stringCheckId = this->ui->lineEditID->text();
+    QString stringCheckAmount = this->ui->lineEditAmount->text();
+    QString stringCheckName = this->ui->lineEditName->text();
     bool ok = false;
-    stringCheck.toInt(&ok);
+    bool ok1 = false;
+    stringCheckId.toInt(&ok);
+    stringCheckAmount.toInt(&ok1);
 
-    if(!ok){
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-    }else{
-         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-    }
+    checkLines( ok, ok1 , stringCheckName.trimmed().isEmpty());
 }
+
+
 
 
 void DialogformAddProduct::on_lineEditName_editingFinished()
 {
-    QString stringCheck = this->ui->lineEditName->text();
+    QString stringCheckId = this->ui->lineEditID->text();
+    QString stringCheckAmount = this->ui->lineEditAmount->text();
+    QString stringCheckName = this->ui->lineEditName->text();
+    bool ok = false;
+    bool ok1 = false;
+    stringCheckId.toInt(&ok);
+    stringCheckAmount.toInt(&ok1);
 
-    if(stringCheck.trimmed().isEmpty()){
-
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-    }else{
-
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-    }
+    checkLines( ok, ok1 , stringCheckName.trimmed().isEmpty());
 }
 
+void DialogformAddProduct:: checkLines(bool isInt, bool isInt2,bool filled){
+
+
+    if(!isInt || !isInt2 || filled){
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+    }else{
+         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+    }
+
+}
