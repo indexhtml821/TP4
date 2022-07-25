@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>897</width>
-    <height>560</height>
+    <width>1009</width>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,16 +140,16 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEditStoreName"/>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineEditLocation"/>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="lineEditInternetAdress"/>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="lineEditPhoneNumber"/>
      </item>
     </layout>
    </widget>
@@ -160,8 +160,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>897</width>
-     <height>25</height>
+     <width>1009</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
