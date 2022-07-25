@@ -20,6 +20,7 @@ public:
     int getId();
     string getName();
     int getAmount();
+    void checkLines(bool isInt, bool isInt2,bool notEmpty);
 
 private slots:
 
